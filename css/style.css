@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Gentium+Plus&family=Noto+Sans+JP:wght@100&display=swap');
+
+
+html{
+    font-family: 'Gentium Plus', serif;
+}
+
+a{
+    background-color: brown;
+}
