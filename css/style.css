@@ -5,6 +5,12 @@ html{
     font-family: 'Gentium Plus', serif;
 }
 
-a{
-    background-color: brown;
+a.navbar-brand{
+    color:white !important;
+}
+
+h1.compte{
+    margin-top:20px;
+    margin-bottom:20px;
+    text-align: center;
 }
