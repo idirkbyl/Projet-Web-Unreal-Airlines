@@ -1,0 +1,1 @@
+//Code du formulaire de la page inscription.php
