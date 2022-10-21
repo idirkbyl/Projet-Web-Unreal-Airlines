@@ -1,3 +1,27 @@
+
+<?php
+try {
+    include("connexionbdd.php");
+
+    $conn = Opencon();
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $query = "SELECT * FROM Users WHERE username='$username' AND mdp ='$password'";
+    $result = mysqli_query($conn, $query);
+    $count = mysqli_num_rows($result);
+
+    if ($count==1){
+        $_SESSION['connecte']= "connecte";
+        header("location: /html/index.html"); // PAGE SUR LAQUELLE JE SUIS REDIRIGE APRES CONNEXION
+
+    }
+    else{
+        $erreur = "Nom d'utilisateur ou mot de passe inccorect";
+    }
+} catch (Exception $e) {
+    echo $e;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,20 +61,26 @@
 
 </container>
 <div class="main-block">
-    <form method="post" action="signin.php">
+    <form method="post" action="#">
             <h4><b>Se connecter</b></h4>
             <hr>
             <h5 class="formname"> Nom d'utilisateur </h5>
-                <input type="text"  id="username" name="username" placeholder="Entrez votre nom d'utilisateur">
+                <input type="text"  id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required>
             <hr>
             <h5 class ="formname"> Mot de passe </h5>
-            <input type="password"  id="password" name="password" placeholder="Entrez votre mot de passe">
+            <input type="password"  id="password" name="password" placeholder="Entrez votre mot de passe" required>
             <hr>
             <button type="submit" class="btn btn-dark btn-block connect">Se connecter</button>
     </form>
     <hr>
     <a href = "inscription.php" class="black";> Je n'ai pas de compte </a>
 </div>
+<?php if (isset($erreur)): ?>
+    <div class ="erreur">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        Nom d'utilisateur ou mot de passe incorrect
+    </div>
+<?php endif; ?>
 
 
 </body>
