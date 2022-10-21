@@ -14,4 +14,6 @@ function Closecon($conn){
     $conn -> close();
 }
 
+$erreur= array();
+
 ?>

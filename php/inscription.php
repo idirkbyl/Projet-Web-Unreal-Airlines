@@ -1,3 +1,52 @@
+<?php
+try {
+    include("connexionbdd.php");
+
+    $conn = Opencon();
+    $username = $_POST['username'];
+    $nom = $_POST['name'];
+    $prenom = $_POST['firstname'];
+    $mail = $_POST['mail'];
+    $tel = $_POST['tel'];
+    $birthdate = $_POST['birthdate'];
+    $password = $_POST['password'];
+    $confirm = $_POST['confirm'];
+    $queryUsername = "SELECT * FROM Users WHERE username='$username'";
+    $queryMail = "SELECT * FROM Users WHERE email='$mail'";
+    $resultU = mysqli_query($conn, $queryUsername);
+    $resultM = mysqli_query($conn, $queryMail);
+    $existU = mysqli_num_rows($resultU);
+    $existM = mysqli_num_rows($resultM);
+
+    if($existU==1|| $existM==1){
+        if ($existU==1 && $existM==1 ){
+            array_push($erreur,"Ce nom d'utilisateur est déja attribué");
+            array_push($erreur,"E-mail déja utilisé");
+            
+        }
+        else if($existU==1){
+            array_push($erreur,"Ce nom d'utilisateur est déja attribué");
+            
+        }
+        else{
+            array_push($erreur,"E-mail déja utilisé");
+            
+        }
+        $incorrect=1;
+    }
+    if($incorrect!=1){
+    $insert = "INSERT INTO Users (nom,prenom,birth_date,email,tel,mdp,username,is_admin) VALUES ('$nom','$prenom','$birthdate','$mail','$tel','$password','$username','0')"; 
+    $execinsert = mysqli_query($conn,$insert);
+    Closecon($conn);
+    }
+
+
+    
+} catch (Exception $e) {
+    echo $e;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,40 +85,76 @@
 
 
 </container>
+<div class="container">
+        <?php foreach($erreur as $a): ?>
+                    <div class ="erreur"  position:fixed>
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                        <?php echo $a?>
+                    </div>
+                <?php endforeach; ?>
+    </div>
 <div class="main-block">
-    <form method="post" action="register.php">
+
+    <form method="post" action="#">
             <h4><b>Inscription</b></h4>
             <hr>
             <h5 class="formname"> Nom  </h5>
-                <input type="text"  id="name" name="name" placeholder="Entrez votre nom ">
+                <input type="text"  id="name" name="name" placeholder="Entrez votre nom " required>
             <hr>
             <h5 class="formname"> Prénom </h5>
-                <input type="text"  id="firstname" name="firstname" placeholder="Entrez votre prénom">
+                <input type="text"  id="firstname" name="firstname" placeholder="Entrez votre prénom" required>
             <hr>
             <h5 class="formname"> Date de naissance </h5>
-                <input type="text"  id="birthdate" name="birthdate" placeholder="JJ/MM/AAAA">
+                <input type="text"  id="birthdate" name="birthdate" maxlength='10' placeholder="JJ/MM/AAAA" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}" required>
             <hr>
             <h5 class="formname"> Nom d'utilisateur </h5>
-                <input type="text"  id="username" name="username" placeholder="Entrez votre nom d'utilisateur">
+                <input type="text"  id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required>
             <hr>
             <h5 class="formname"> Mail </h5>
-                <input type="email"  id="mail" name="mail" placeholder="Entrez votre mail">
+                <input type="email"  id="mail" name="mail" placeholder="Entrez votre mail" required>
             <hr>
             <h5 class="formname"> Téléphone </h5>
-                <input type="tel"  id="tel" name="tel" placeholder="Entrez votre numéro de téléphone" pattern="[0]-[1-9]{1}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}" requierd>
+                <input type="tel"  id="tel" name="tel" maxlength='10' placeholder="Entrez votre numéro de téléphone" pattern="[0][1-9]{1}[0-9]{8}" required>
             <hr>
             <h5 class ="formname"> Mot de passe </h5>
-            <input type="password"  id="password" name="password" placeholder="Entrez votre mot de passe">
+            <input type="password"  id="password" name="password" placeholder="Entrez votre mot de passe" onkeyup='check()' required>
             <h5 class ="formname"> Mot de passe </h5>
-            <input type="password" maxlength="10" id="password2" name="password2" placeholder="Confirmez votre mot de passe">
+            <input type="password" id="confirm" name="confirm" placeholder="Confirmez votre mot de passe"  onkeyup='check()' required>
+            <br>
+            <span id='message'></span>
             <hr>
+
             
             <button type="submit" class="btn btn-dark btn-block connect">S'inscrire</button>
     </form>
     <hr>
     <a href = "connexion.php" class="black";> J'ai déja un compte </a>
 </div>
-
+<script>
+    var check = function() {
+  if (document.getElementById('password').value ==
+    document.getElementById('confirm').value) {
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = '';
+  } else {
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'Les mots de passes ne  correspondent pas';
+  }
+}
+    function validerMdp(){
+        const password = document.querySelector('input[name=password]');
+        const confirm = document.querySelector('input[name=confirm]');
+        if(confirm.value === password.value){
+            confirm.setCustomValidity('');
+        }
+        else{
+            confirm.setCustomValidity('Les mots de passes sont différents');
+        }
+    }
+</script>
 
 </body>
+<footer>
+
+</footer>
 </html>
