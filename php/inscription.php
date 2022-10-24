@@ -1,7 +1,8 @@
 <?php
-try {
     include("connexionbdd.php");
 
+    if(isset($_POST['firstname']))
+    {
     $conn = Opencon();
     $username = $_POST['username'];
     $nom = $_POST['name'];
@@ -39,11 +40,6 @@ try {
     $execinsert = mysqli_query($conn,$insert);
     Closecon($conn);
     }
-
-
-    
-} catch (Exception $e) {
-    echo $e;
 }
 ?>
 
@@ -61,29 +57,29 @@ try {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <title>Connexion</title>
+    <title>Inscription</title>
 </head>
 <body>
-    
-    <container>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark color">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" >Unreal Airlines </a>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active">
-            <a class="nav-link" href="../html/index.html">Acceuil <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="reservation.php">Reserver</a>
-        </li>
-        </ul>
-    </div>
-    </nav>
-
-
+<container>
+<nav class="navbar navbar-expand-lg navbar-dark ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" >Unreal Airlines </a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="accueil.php">Acceuil <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="connexion.php">Se connecter</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="connexion.php">Reserver</a>
+            </li>
+            </ul>
+        </div>
+        </nav>
 </container>
 <div class="container">
         <?php foreach($erreur as $a): ?>
@@ -94,7 +90,6 @@ try {
                 <?php endforeach; ?>
     </div>
 <div class="main-block">
-
     <form method="post" action="#">
             <h4><b>Inscription</b></h4>
             <hr>
@@ -118,7 +113,7 @@ try {
             <hr>
             <h5 class ="formname"> Mot de passe </h5>
             <input type="password"  id="password" name="password" placeholder="Entrez votre mot de passe" onkeyup='check()' required>
-            <h5 class ="formname"> Mot de passe </h5>
+            <h5></h5>
             <input type="password" id="confirm" name="confirm" placeholder="Confirmez votre mot de passe"  onkeyup='check()' required>
             <br>
             <span id='message'></span>
@@ -128,7 +123,7 @@ try {
             <button type="submit" class="btn btn-dark btn-block connect">S'inscrire</button>
     </form>
     <hr>
-    <a href = "connexion.php" class="black";> J'ai déja un compte </a>
+    <a href = "connexion.php" class="white";> J'ai déja un compte </a>
 </div>
 <script>
     var check = function() {

@@ -4,7 +4,7 @@
 
 
 body{
-    background: url(../img/test.jpeg) no-repeat center center fixed;
+    background-color: #222121 !important;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -34,12 +34,8 @@ h2{
    margin:auto;
 }
 
-.connect:hover{
-  width:200px !important;
-  background-color: #1ca4ff !important;
-  margin:auto;
-}
 
+@media (min-width:480px){
 .main-block {
     /* On positionne le bloc */
     margin-left: auto;
@@ -50,16 +46,12 @@ h2{
     padding: 15px 0; 
     border-radius: 5px; 
     border: solid 1px #ccc;
-    background: #042172a6;
+    background: #F3F3F3; 
     text-align: center;
+    -webkit-box-shadow: 0px 0px 28px 4px rgba(0,0,0,0.56); 
+    box-shadow: 0px 0px 28px 4px rgba(0,0,0,0.56);
     font-family: 'Montserrat';
-    box-sizing: border-box;
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgb(23, 32, 90);
-    border: 2px solid #1ca4ff;
-    color: white;
 }
-
 
 .erreur {
     padding: 20px;
@@ -97,22 +89,75 @@ h2{
 
 }
   
-hr{
-  visibility: hidden;
+
+}
+
+@media (max-width:480px){
+    .main-block {
+        /* On positionne le bloc */
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 8%;
+        margin-bottom: 5%;
+        width: 240px;
+        padding: 15px 0; 
+        border-radius: 5px; 
+        border: solid 1px #ccc;
+        background: #F3F3F3; 
+        text-align: center;
+        -webkit-box-shadow: 0px 0px 28px 4px rgba(0,0,0,0.56); 
+        box-shadow: 0px 0px 28px 4px rgba(0,0,0,0.56);
+        font-family: 'Montserrat';
+    }
+    
+    .erreur {
+        padding: 20px;
+        background-color: #f44336; 
+        color: white;
+        width:70%;
+        height:auto;
+        right: 30px;
+        border-radius: 7px;
+        margin: 20px 21% 20px 15% ;
+    
+      }
+      
+      .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      
+      .closebtn:hover {
+        color: black;
+      }
+
+      input{
+        width:90%;
+        padding:7px;
+        border-radius: 5px;
+        border : 1px solid #ccc;
+        font-size: 5px;
+    }
 }
 
 
 
 
-a.white:hover{
-    color:#1ca4ff;
+a.black:hover{
+    color:#6A6665;
     text-decoration: none !important;
 
 
 }
 
-a.white{
-    color:white;
+a.black{
+    color:black;
 }
 
 
@@ -199,14 +244,31 @@ a.white{
   margin-left: 50px;
 }
 
+.carousel {
+    margin-top: 200px;
+    background: #2D2C2C;
+  }
+  
+  .carousel-cell {
+    width: 66%;
+    height: 300px;
+    margin-right: 10px;
+    background: #8C8;
+    border-radius: 5px;
+    background-position: center center;
+    background-size: cover;
+  }
 
-/* Le contenu de la page se pousse avec une transition quand on ouvre la sidebar */
-#main {
-  transition: margin-left .5s;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 600px) {
-  .sidebar {padding-top: 15px;}
-  .sidebar a, .sidebar button {font-size: 18px;}
+  .center{
+    margin-top: 140px;
+    text-align: center;
+    color:white;
+  }
+  
+.slide1{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/bikinibot.jpeg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }

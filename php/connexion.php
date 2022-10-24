@@ -1,7 +1,9 @@
 
 <?php
-try {
+
+    if (isset($_POST['username'])){
     include("connexionbdd.php");
+
 
     $conn = Opencon();
     $username = $_POST['username'];
@@ -11,15 +13,15 @@ try {
     $count = mysqli_num_rows($result);
 
     if ($count==1){
+        session_start();
         $_SESSION['connecte']= "connecte";
-        header("location: /html/index.html"); // PAGE SUR LAQUELLE JE SUIS REDIRIGE APRES CONNEXION
+        $_SESSION['username'] = $username;
+        header("location:  accueil.php"); // PAGE SUR LAQUELLE JE SUIS REDIRIGE APRES CONNEXION
 
     }
     else{
         $erreur = "Nom d'utilisateur ou mot de passe inccorect";
     }
-} catch (Exception $e) {
-    echo $e;
 }
 ?>
 <!DOCTYPE html>
@@ -41,25 +43,29 @@ try {
 <body>
     
     <container>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark color">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" >Unreal Airlines </a>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active">
-            <a class="nav-link" href="../html/index.html">Acceuil <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="reservation.php">Reserver</a>
-        </li>
-        </ul>
-    </div>
-    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" >Unreal Airlines </a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="accueil.php">Acceuil <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="connexion.php">Se connecter</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="connexion.php">Reserver</a>
+            </li>
+            </ul>
+        </div>
+        </nav>
 
 
 </container>
+
 <div class="main-block">
     <form method="post" action="#">
             <h4><b>Se connecter</b></h4>
@@ -73,7 +79,7 @@ try {
             <button type="submit" class="btn btn-dark btn-block connect">Se connecter</button>
     </form>
     <hr>
-    <a href = "inscription.php" class="black";> Je n'ai pas de compte </a>
+    <a href = "inscription.php" class="white";> Je n'ai pas de compte </a>
 </div>
 <?php if (isset($erreur)): ?>
     <div class ="erreur">
@@ -81,6 +87,8 @@ try {
         Nom d'utilisateur ou mot de passe incorrect
     </div>
 <?php endif; ?>
+
+
 
 
 </body>
