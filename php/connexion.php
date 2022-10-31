@@ -11,9 +11,12 @@
     $query = "SELECT * FROM Users WHERE username='$username' AND mdp ='$password'";
     $result = mysqli_query($conn, $query);
     $count = mysqli_num_rows($result);
+    $row = mysqli_fetch_assoc($result);
+    $userid = $row['id_users'];
 
     if ($count==1){
         session_start();
+        $_SESSION['userid']= $userid;
         $_SESSION['connecte']= "connecte";
         $_SESSION['username'] = $username;
         header("location:  accueil.php"); // PAGE SUR LAQUELLE JE SUIS REDIRIGE APRES CONNEXION

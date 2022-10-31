@@ -136,16 +136,7 @@
     document.getElementById('message').innerHTML = 'Les mots de passes ne  correspondent pas';
   }
 }
-    function validerMdp(){
-        const password = document.querySelector('input[name=password]');
-        const confirm = document.querySelector('input[name=confirm]');
-        if(confirm.value === password.value){
-            confirm.setCustomValidity('');
-        }
-        else{
-            confirm.setCustomValidity('Les mots de passes sont différents');
-        }
-    }
+
 </script>
 
 </body>
