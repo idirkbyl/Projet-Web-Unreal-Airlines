@@ -9,6 +9,7 @@
                 </button>
                 <ul class="dropdown-menu dorpdown-menu-lg-end" aria-labelledby="dropdownMenuButton">
                    <li> <a class="dropdown-item" href="profil.php">Profil</a></li>
+                   <li> <a class="dropdown-item" href="mesreservations.php">Mes réservations</a></li>
                     <form method="post" action="deconnexion.php">
                     <li><button class="dropdown-item" href="#" type="submit">Se déconnecter</a></li>
                     </form>
@@ -22,6 +23,11 @@
         <a href="profil.php">Profil</a>
         <a href="reservation.php">Réserver</a>
         <a href="destination.php">Destinations</a>
+        <?php 
+        if ($_SESSION['is_admin']==1){
+            echo  "<a href=\"admin.php\">Admin</a>";
+        }
+        ?>
         <form method="post" action="deconnexion.php">
         <button type="submit" id="switch"style="visibility: hidden; opacity: 0;" >Se déconnecter</button>
         </form>

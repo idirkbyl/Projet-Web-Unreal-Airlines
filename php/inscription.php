@@ -19,6 +19,9 @@
     $existU = mysqli_num_rows($resultU);
     $existM = mysqli_num_rows($resultM);
 
+    if($confirm!=$password){
+        array_push($erreur,"Les mots de passes ne correspondent pas");
+    }
     if($existU==1|| $existM==1){
         if ($existU==1 && $existM==1 ){
             array_push($erreur,"Ce nom d'utilisateur est déja attribué");
@@ -38,6 +41,7 @@
     if($incorrect!=1){
     $insert = "INSERT INTO Users (nom,prenom,birth_date,email,tel,mdp,username,is_admin) VALUES ('$nom','$prenom','$birthdate','$mail','$tel','$password','$username','0')"; 
     $execinsert = mysqli_query($conn,$insert);
+    array_push($succes,"Votre compte à bien été créé");
     Closecon($conn);
     }
 }
@@ -87,7 +91,17 @@
                         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                         <?php echo $a?>
                     </div>
-                <?php endforeach; ?>
+        <?php endforeach;
+        $erreur=array();
+        ?>
+         <?php foreach($succes as $a): ?>
+                    <div class ="succes"  position:fixed>
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                        <?php echo $a?>
+                    </div>
+        <?php endforeach;
+        $succes=array();
+        ?>
     </div>
 <div class="main-block">
     <form method="post" action="#">

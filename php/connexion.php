@@ -14,16 +14,18 @@
     $row = mysqli_fetch_assoc($result);
     $userid = $row['id_users'];
 
+    $is_admin = $row['is_admin'];
+
     if ($count==1){
         session_start();
         $_SESSION['userid']= $userid;
-        $_SESSION['connecte']= "connecte";
+        $_SESSION['is_admin'] = $is_admin;
         $_SESSION['username'] = $username;
         header("location:  accueil.php"); // PAGE SUR LAQUELLE JE SUIS REDIRIGE APRES CONNEXION
 
     }
     else{
-        $erreur = "Nom d'utilisateur ou mot de passe inccorect";
+        array_push($erreur, "Nom d'utilisateur ou mot de passe inccorect");
     }
 }
 ?>
@@ -69,6 +71,14 @@
 
 </container>
 
+<?php foreach($erreur as $a): ?>
+        <div class ="erreur"  position:fixed>
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <?php echo $a?>
+        </div>
+ <?php endforeach;
+    $erreur=array();
+?>
 <div class="main-block">
     <form method="post" action="#">
             <h4><b>Se connecter</b></h4>
@@ -84,12 +94,7 @@
     <hr>
     <a href = "inscription.php" class="white";> Je n'ai pas de compte </a>
 </div>
-<?php if (isset($erreur)): ?>
-    <div class ="erreur">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-        Nom d'utilisateur ou mot de passe incorrect
-    </div>
-<?php endif; ?>
+
 
 
 

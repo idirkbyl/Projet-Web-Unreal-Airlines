@@ -15,5 +15,6 @@ function Closecon($conn){
 }
 
 $erreur= array();
+$succes = array();
 
 ?>
