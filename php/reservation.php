@@ -88,12 +88,14 @@ while(isset($_POST['name'.$i])){
 include "sidebarconnect.php";
 
 ?>
-<?php if (isset($succes)): ?>
-    <div class ="succes">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-        <?php echo $succes?>
-    </div>
-<?php endif; ?>
+         <?php foreach($succes as $a): ?>
+                    <div class ="succes"  position:fixed>
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                        <?php echo $a?>
+                    </div>
+        <?php endforeach;
+        $succes=array();
+        ?>
 <div class="main-block">
     <form method="post" action="#">
                 <h4><b>Réservation</b></h4>
