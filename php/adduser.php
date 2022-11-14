@@ -1,6 +1,9 @@
 <?php
+    session_start();
+    if($_SESSION['is_admin']!=1){
+        header("location: accueil.php");
+    }
     include("connexionbdd.php");
-
     if(isset($_POST['firstname']))
     {
     $conn = Opencon();
@@ -9,6 +12,7 @@
     $prenom = $_POST['firstname'];
     $mail = $_POST['mail'];
     $tel = $_POST['tel'];
+    $isadmin = $_POST['isadmin'];
     $birthdate = $_POST['birthdate'];
     $password = $_POST['password'];
     $confirm = $_POST['confirm'];
@@ -40,9 +44,9 @@
         $incorrect=1;
     }
     if($incorrect!=1){
-    $insert = "INSERT INTO Users (nom,prenom,birth_date,email,tel,mdp,username,is_admin) VALUES ('$nom','$prenom','$birthdate','$mail','$tel','$password','$username','0')"; 
+    $insert = "INSERT INTO Users (nom,prenom,birth_date,email,tel,mdp,username,is_admin) VALUES ('$nom','$prenom','$birthdate','$mail','$tel','$password','$username','$isadmin')"; 
     $execinsert = mysqli_query($conn,$insert);
-    array_push($succes,"Votre compte à bien été créé");
+    header("location: admin.php");
     Closecon($conn);
     }
 }
@@ -62,30 +66,12 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <title>Inscription</title>
+    <title>Add Users</title>
 </head>
 <body>
-<container>
-<nav class="navbar navbar-expand-lg navbar-dark ">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" >Unreal Airlines </a>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="accueil.php">Acceuil <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="connexion.php">Se connecter</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="connexion.php">Reserver</a>
-            </li>
-            </ul>
-        </div>
-        </nav>
-</container>
+<?php 
+    include "sidebarconnect.php";
+?>
 <div class="container">
         <?php foreach($erreur as $a): ?>
                     <div class ="erreur"  position:fixed>
@@ -106,40 +92,46 @@
     </div>
 <div class="main-block">
     <form method="post" action="#">
-            <h4><b>Inscription</b></h4>
+            <h4><b>Ajoutez un Utilisateur</b></h4>
             <hr>
             <h5 class="formname"> Nom  </h5>
-                <input type="text"  id="name" name="name" placeholder="Entrez votre nom " required>
+                <input type="text"  id="name" name="name" placeholder="Entrez un nom " required>
             <hr>
             <h5 class="formname"> Prénom </h5>
-                <input type="text"  id="firstname" name="firstname" placeholder="Entrez votre prénom" required>
+                <input type="text"  id="firstname" name="firstname" placeholder="Entrez un prénom" required>
             <hr>
             <h5 class="formname"> Date de naissance </h5>
                 <input type="text"  id="birthdate" name="birthdate" maxlength='10' placeholder="JJ/MM/AAAA" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}" required>
             <hr>
             <h5 class="formname"> Nom d'utilisateur </h5>
-                <input type="text"  id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required>
+                <input type="text"  id="username" name="username" placeholder="Entrez un nom d'utilisateur" required>
             <hr>
             <h5 class="formname"> Mail </h5>
-                <input type="email"  id="mail" name="mail" placeholder="Entrez votre mail" required>
+                <input type="email"  id="mail" name="mail" placeholder="Entrez un mail" required>
             <hr>
             <h5 class="formname"> Téléphone </h5>
-                <input type="tel"  id="tel" name="tel" maxlength='10' placeholder="Entrez votre numéro de téléphone" pattern="[0][1-9]{1}[0-9]{8}" required>
+                <input type="tel"  id="tel" name="tel" maxlength='10' placeholder="Entrez un numéro de téléphone" pattern="[0][1-9]{1}[0-9]{8}" required>
+            <hr>
+            <h5 class="formname"> is_admin </h5>
+                <input type="text"  id="isadmin" name="isadmin" maxlength='1' placeholder="1 pour admin, 0 sinon" pattern="[0-1]" required>
             <hr>
             <h5 class ="formname"> Mot de passe </h5>
-            <input type="password"  id="password" name="password" placeholder="Entrez votre mot de passe" onkeyup='check()' required>
+            <input type="password"  id="password" name="password" placeholder="Entrez un mot de passe" onkeyup='check()' required>
             <h5></h5>
-            <input type="password" id="confirm" name="confirm" placeholder="Confirmez votre mot de passe"  onkeyup='check()' required>
+            <input type="password" id="confirm" name="confirm" placeholder="Confirmez le mot de passe"  onkeyup='check()' required>
             <br>
             <span id='message'></span>
             <hr>
 
             
-            <button type="submit" class="btn btn-dark btn-block connect">S'inscrire</button>
+            <button type="submit" class="btn btn-dark btn-block connect">Ajouter l'utilisateur</button>
     </form>
     <hr>
-    <a href = "connexion.php" class="white";> J'ai déja un compte </a>
+    <a href = "admin.php" class="white";> Retour </a>
 </div>
+
+
+
 <script>
     var check = function() {
   if (document.getElementById('password').value ==
@@ -153,9 +145,18 @@
 }
 
 </script>
+<script>
+function openNav() {
+document.getElementById("sidebar").style.width = "300px";
+document.getElementById("switch").style.visibility = "visible";
+document.getElementById("switch").style.opacity = "100";
+}
 
+function closeNav() {
+document.getElementById("sidebar").style.width = "0";
+document.getElementById("switch").style.visibility = "hidden";
+document.getElementById("switch").style.opacity = "0";
+}
+</script>
 </body>
-<footer>
-
-</footer>
 </html>

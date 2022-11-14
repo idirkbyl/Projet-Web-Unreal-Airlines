@@ -19,9 +19,48 @@
 <body>
 <?php 
 include "sidebarconnect.php";?>
- <h2 style="margin:10px; color:white;">  Mes réservations </h2>
-<div class="main-block" style="margin-top:3px;">
+ <h2 style="margin:10px; color:white; ">  Mes réservations </h2>
+<div style="margin-top:3px; margin:10px;">
+<?php
+    session_start();
+    include "connexionbdd.php" ;
+    $userid = $_SESSION['userid'];
+    $conn = Opencon();
+    $query1 = "SELECT * FROM Reservations WHERE id_users='$userid'";
+    $result1 = mysqli_query($conn,$query1);
 
+    ?>
+    <table class="table table-dark" style="">
+    <thead>
+        <tr>
+        <th scope="col" style="color:white;">Numéro de réservation</th>
+        <th scope="col" style="color:white;">Nom</th>
+        <th scope="col" style="color:white;">Prénom</th>
+        <th scope="col" style="color:white;">Destination</th>
+        <th scope="col" style="color:white;">Date</th>
+        <th scope="col" style="color:white;">#</th>
+        </tr>
+    </thead>
+        <?php
+        
+            while($row = mysqli_fetch_assoc($result1)){
+                echo "<tr>";
+                echo "<th scope=\"col\" style=\"color:white;\">". $row['id_reservation'] . "</th>";
+                echo "<th scope=\"col\" style=\"color:white;\">". $row['nom'] . "</th>";
+                echo "<th scope=\"col\" style=\"color:white;\">". $row['prenom'] . "</th>";
+                $query2 = "SELECT nom FROM Destinations WHERE id_destination=$row[id_destination]";
+                $result = mysqli_query($conn,$query2);
+                $tmp = mysqli_fetch_assoc($result);
+                $destination = $tmp['nom'];
+                echo "<th scope=\"col\" style=\"color:white;\">". $destination . "</th>";
+                echo "<th scope=\"col\" style=\"color:white;\">". $row["date"] . "</th>";
+                $id_reserv = $row['id_reservation'];
+                echo "<th scope=\"col\" style=\"color:white;\"><input type=\"submit\" class=\"annule\" onclick=\"location.href='delete_reservation.php?id=$id_reserv&lieu=$destination';\" value=\"Annuler\"></input></th>";
+                echo "</tr>";
+            }
+        ?>
+    </table>
+    
 </div>
 
 

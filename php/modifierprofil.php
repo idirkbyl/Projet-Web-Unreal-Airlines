@@ -1,6 +1,6 @@
 <?php 
-
-try{$nom=$_POST['name'];
+if(isset($_POST['name'])){
+$nom=$_POST['name'];
 $prenom=$_POST['firstname'];
 $bd=$_POST['birthdate'];
 $username=$_POST['username'];
@@ -76,7 +76,5 @@ if($password==$confirm){
         Closecon($conn);
         $_SESSION['username'] = $username;
     }}}
-    catch(Exception $e){
-        echo $e;
-    }
+
 ?>

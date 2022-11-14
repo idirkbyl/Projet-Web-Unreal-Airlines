@@ -24,6 +24,7 @@
         <a href="reservation.php">Réserver</a>
         <a href="destination.php">Destinations</a>
         <?php 
+        session_start();
         if ($_SESSION['is_admin']==1){
             echo  "<a href=\"admin.php\">Admin</a>";
         }

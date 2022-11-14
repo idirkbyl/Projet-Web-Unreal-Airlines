@@ -12,12 +12,12 @@
     $result = mysqli_query($conn, $query);
     $count = mysqli_num_rows($result);
     $row = mysqli_fetch_assoc($result);
-    $userid = $row['id_users'];
 
-    $is_admin = $row['is_admin'];
 
     if ($count==1){
         session_start();
+        $userid = $row['id_users'];
+        $is_admin = $row['is_admin'];
         $_SESSION['userid']= $userid;
         $_SESSION['is_admin'] = $is_admin;
         $_SESSION['username'] = $username;
@@ -71,12 +71,14 @@
 
 </container>
 
-<?php foreach($erreur as $a): ?>
+<?php
+if(isset($erreur)){
+ foreach($erreur as $a): ?>
         <div class ="erreur"  position:fixed>
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                 <?php echo $a?>
         </div>
- <?php endforeach;
+ <?php endforeach;}
     $erreur=array();
 ?>
 <div class="main-block">

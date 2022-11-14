@@ -293,7 +293,58 @@ a.white{
   transition: opacity 0.7s;
   cursor: pointer;
 }
+
+
 .add:hover{
   color: #4ab7ff;
+  text-decoration: none;
   transition: 0.3s;
+}
+
+.addblack{
+  background: none!important;
+  display: block;
+  border: none;
+  color: black;
+  text-align: center;
+  margin-left:22%;
+  padding: 8px;
+  text-decoration: none;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+
+  transition: opacity 0.7s;
+  cursor: pointer;
+}
+.addblack:hover{
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+
+
+.annule {
+  background: none!important;
+  display: block;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  outline: none;
+  width:100%;
+  padding:0px;
+  border-radius: 0px;
+  border : 0px solid #ccc;
+  font-size: 16px;
+
+
+}
+
+
+.annule:hover {
+  color:red;
+  transition:0.5s;
+
 }

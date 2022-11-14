@@ -1,20 +1,27 @@
 <?php
+session_start();
+if($_SESSION['is_admin']!=1){
+    header("location: accueil.php");
+}
+
 include("connexionbdd.php");
 $conn = Opencon();
-session_start();
 if(isset($_POST['name'])){
     $lieu = $_POST['lieu'];
     $date = $_POST['date'];
     $nom=$_POST['name'];
     $prenom=$_POST['firstname'];
     $mail = $_POST['mail'];
+    //Query pour récupérer l'id Destination
     $query = "SELECT id_destination FROM Destinations WHERE nom='$lieu'";
     $result = mysqli_query($conn,$query);
     $row= mysqli_fetch_assoc($result);
     $id_destination=$row['id_destination'];
+    //Query pour voir si un compte existe déja avec l'email entré
     $query = "SELECT * FROM Users WHERE email='$mail'";
     $result = mysqli_query($conn,$query);
     $count=mysqli_num_rows($result);
+    //Query pour le nombre de places
     $queryNbPlaces= "SELECT nbplaces FROM Destinations WHERE id_destination=$id_destination";
     $resultNbPlaces = mysqli_query($conn,$queryNbPlaces);
     $nbp = mysqli_fetch_assoc($resultNbPlaces);
@@ -29,6 +36,8 @@ if(isset($_POST['name'])){
         $nbPlaces-=1;
         $query = "UPDATE Destinations SET nbplaces='$nbPlaces' WHERE id_destination=$id_destination";
         $result = mysqli_query($conn, $query);
+        if(!isset($_POST['name2']))
+        header("location: admin.php");
         }
         else{
             array_push($erreur,"Il n'y a plus de places pour le voyage séléctionné");
@@ -43,6 +52,8 @@ if(isset($_POST['name'])){
             $nbPlaces-=1;
             $query = "UPDATE Destinations SET nbplaces='$nbPlaces' WHERE id_destination=$id_destination";
             $result = mysqli_query($conn, $query);
+            if(!isset($_POST['name2']))
+            header("location: admin.php");
         }
         else{
             array_push($erreur,"Il n'y a plus de places pour le voyage séléctionné");
@@ -76,6 +87,7 @@ while(isset($_POST['name'.$i])){
         $nbPlaces-=1;
         $query = "UPDATE Destinations SET nbplaces='$nbPlaces' WHERE id_destination=$id_destination";
         $result = mysqli_query($conn, $query);
+        
         }
         else{
             array_push($erreur,"Il n'y a plus de places pour le voyage séléctionné");
@@ -98,7 +110,7 @@ while(isset($_POST['name'.$i])){
     }
     $i+=1;
 }
-
+header("location: admin.php");
 
 
 ?>
@@ -168,6 +180,7 @@ include "sidebarconnect.php";
                 </span>
                 <button onclick="champ()" class="add"> Ajouter une personne </button>
                 <button type="submit" class="btn btn-dark btn-block connect">Valider</button>
+                <a href = "admin.php" class="white" style="margin-top:10px;"> Retour </a>
     </form>
 </div>
 
