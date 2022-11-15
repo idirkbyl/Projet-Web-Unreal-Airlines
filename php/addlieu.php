@@ -10,12 +10,14 @@ if($_SESSION['is_admin']!=1){
 <?php
     include("connexionbdd.php");
 
-    try{if(isset($_POST['nbplaces']))
+    try{if(isset($_POST['name']))
     {
 
     $conn = Opencon();
-    $nom = $_POST['nom'];
+    $nom = $_POST['name'];
     $nbplaces = $_POST['nbplaces'];
+    $image = $_POST['image'];
+    $description = $_POST['description'];
     $password = $_POST['password'];
     $confirm = $_POST['confirm'];
     $username = $_SESSION['username'];
@@ -29,7 +31,7 @@ if($_SESSION['is_admin']!=1){
         array_push($erreur,"Mot de passe incorrect");
     }
     else{
-        $insert = "INSERT INTO Destinations (nom,nbplaces) VALUES ('$nom','$nbplaces')";
+        $insert = "INSERT INTO Destinations (nom,nbplaces,`image`,`description`) VALUES ('$nom','$nbplaces','$image','$description')";
         $execinsert = mysqli_query($conn,$insert);
         header("location: admin.php");
     }
@@ -83,6 +85,12 @@ include "sidebarconnect.php";
             <hr>
             <h5 class="formname"> Nbplaces </h5>
                 <input type="text"  id="nbplaces" name="nbplaces" placeholder="Entrez le nombre de places" required>
+            <hr>
+            <h5 class="formname"> Lien de l'image </h5>
+                <input type="text"  id="image" name="image" placeholder="Entrez le lien de l'image" required>
+            <hr>
+            <h5 class="formname"> Description du lieu </h5>
+                <textarea  id="description" name="description"> </textarea>
             <hr>
             <h5 class ="formname"> Mot de passe </h5>
             <input type="password"  id="password" name="password" placeholder="Entrez votre mot de passe" onkeyup='check()' required>

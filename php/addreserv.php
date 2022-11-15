@@ -102,6 +102,8 @@ while(isset($_POST['name'.$i])){
             $nbPlaces-=1;
             $query = "UPDATE Destinations SET nbplaces='$nbPlaces' WHERE id_destination=$id_destination";
             $result = mysqli_query($conn, $query);
+            if(!isset($_POST['name'.($i+1)]))
+            header("location: admin.php");
         }
         else{
             array_push($erreur,"Il n'y a plus de places pour le voyage séléctionné");
@@ -110,7 +112,7 @@ while(isset($_POST['name'.$i])){
     }
     $i+=1;
 }
-header("location: admin.php");
+
 
 
 ?>
@@ -136,17 +138,25 @@ header("location: admin.php");
 </head>
 <body>
 <?php
-include "sidebarconnect.php";
+include "sidebarconnect.php";?>
 
+<?php foreach($succes as $a): ?>
+        <div class ="succes"  position:fixed>
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <?php echo $a?>
+        </div>
+    <?php endforeach;
+    $succes=array();
 ?>
-         <?php foreach($succes as $a): ?>
-                    <div class ="succes"  position:fixed>
-                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                        <?php echo $a?>
-                    </div>
-        <?php endforeach;
-        $succes=array();
-        ?>
+<?php if(isset($erreur)){
+     foreach($erreur as $a): ?>
+        <div class ="erreur"  position:fixed>
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <?php echo $a?>
+        </div>
+    <?php endforeach;}
+    $erreur=array();
+?>
 <div class="main-block">
     <form method="post" action="#">
                 <h4><b>Réservation</b></h4>

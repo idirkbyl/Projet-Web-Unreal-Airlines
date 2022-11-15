@@ -8,13 +8,16 @@ if(isset($_POST['name'])){
     $nom=$_POST['name'];
     $prenom=$_POST['firstname'];
     $mail = $_POST['mail'];
+    //Query pour récupérer l'id Destination
     $query = "SELECT id_destination FROM Destinations WHERE nom='$lieu'";
     $result = mysqli_query($conn,$query);
     $row= mysqli_fetch_assoc($result);
     $id_destination=$row['id_destination'];
+    //Query pour voir si un compte existe déja avec l'email entré
     $query = "SELECT * FROM Users WHERE email='$mail'";
     $result = mysqli_query($conn,$query);
     $count=mysqli_num_rows($result);
+    //Query pour le nombre de places
     $queryNbPlaces= "SELECT nbplaces FROM Destinations WHERE id_destination=$id_destination";
     $resultNbPlaces = mysqli_query($conn,$queryNbPlaces);
     $nbp = mysqli_fetch_assoc($resultNbPlaces);
@@ -135,6 +138,15 @@ include "sidebarconnect.php";
         <?php endforeach;
         $succes=array();
         ?>
+<?php if(isset($erreur)){
+ foreach($erreur as $a): ?>
+        <div class ="erreur"  position:fixed>
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <?php echo $a?>
+        </div>
+ <?php endforeach;}
+    $erreur=array();
+?>
 <div class="main-block">
     <form method="post" action="#">
                 <h4><b>Réservation</b></h4>
