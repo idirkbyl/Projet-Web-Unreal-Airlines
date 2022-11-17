@@ -1,4 +1,8 @@
 <?php
+if(!isset($_SESSION['userid'])){
+    header("location:  connexion.php");
+}
+
 include("connexionbdd.php");
 $conn = Opencon();
 session_start();
