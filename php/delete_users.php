@@ -17,8 +17,14 @@ if(isset($_POST['password'])){
             $id_users = $_GET['id'];
             $query = "DELETE FROM Users WHERE id_users='$id_users' ";
             $result = mysqli_query($conn, $query);
+            if($id_users!=$userid){
             header("location: admin.php");
             Closecon($conn);
+            }
+            else{
+                header("location: deconnexion.php");
+                Closecon($conn);
+            }
         }
         else{
             array_push($erreur,"Les mots de passes ne correspondent pas");

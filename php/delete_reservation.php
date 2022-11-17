@@ -1,9 +1,7 @@
 <?php 
 include("connexionbdd.php");
 session_start();
-if($_SESSION['is_admin']!=1){
-    header("location: accueil.php");
-}
+
 if(isset($_POST['password'])){
     $conn = Opencon();
     $password = $_POST['password'];

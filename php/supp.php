@@ -11,12 +11,20 @@ try{if(isset($_POST['password'])){
     $count = mysqli_num_rows($result);
     if($count==1){
         if($password==$confirm){
+            $query = "SELECT * FROM Reservations WHERE id_users ='$userid'";
+            $result = mysqli_query($conn, $query);
+            $nbreserv = mysqli_num_rows($result);
+            if($nbreserv!=0){
+                array_push($erreur,"Pour supprimer votre compte, veuillez supprimer toutes vos réservations");
+            }
+            else{
             $query = "DELETE FROM Users WHERE id_users='$userid' ";
             $result = mysqli_query($conn, $query);
             session_unset();
             session_destroy();
             header("location: accueil.php");
             Closecon($conn);
+            }
         }
     }
     else{

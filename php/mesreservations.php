@@ -22,7 +22,6 @@ include "sidebarconnect.php";?>
  <h2 style="margin:10px; color:white; ">  Mes réservations </h2>
 <div style="margin-top:3px; margin:10px;">
 <?php
-    session_start();
     include "connexionbdd.php" ;
     $userid = $_SESSION['userid'];
     $conn = Opencon();

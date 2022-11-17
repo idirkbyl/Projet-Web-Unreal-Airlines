@@ -6,7 +6,6 @@ if(!isset($_SESSION['userid'])){
 
 include("connexionbdd.php");
 $conn = Opencon();
-session_start();
 if(isset($_POST['name'])){
     $lieu = $_POST['lieu'];
     $date = $_POST['date'];
