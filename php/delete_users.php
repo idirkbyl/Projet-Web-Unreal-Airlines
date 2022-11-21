@@ -15,6 +15,8 @@ if(isset($_POST['password'])){
     if($count==1){
         if($password==$confirm){
             $id_users = $_GET['id'];
+            $query = "DELETE FROM Reservations WHERE id_users='$id_users' ";
+            $result = mysqli_query($conn, $query);
             $query = "DELETE FROM Users WHERE id_users='$id_users' ";
             $result = mysqli_query($conn, $query);
             if($id_users!=$userid){

@@ -12,6 +12,8 @@ try{if(isset($_POST['password'])){
     if($count==1){
         if($password==$confirm){
             $id_destination = $_GET['id'];
+            $query = "DELETE FROM Reservations WHERE id_destination='$id_destination' ";
+            $result = mysqli_query($conn, $query);
             $query = "DELETE FROM Destinations WHERE id_destination='$id_destination' ";
             $result = mysqli_query($conn, $query);
             header("location: admin.php");
